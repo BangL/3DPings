@@ -1,0 +1,12 @@
+{
+  "ping_scale": 1.0,
+  "ping_lifetime": 60,
+  "ping_fade_out_duration": 10,
+  "ping_show_name": true,
+  "ping_show_distance": true,
+  "max_pings_per_player": 10,
+  "colorize_pings": false,
+  "ping_alpha": 0.8,
+  "announce_player_uses_pings_mod": true,
+  "default_icon": "waypoint_special_where"
+}

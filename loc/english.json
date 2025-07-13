@@ -1,0 +1,46 @@
+{
+  "pings_title": "3DPings",
+
+  "pings_wheel_hotkey": "3DPings wheel",
+  "pings_ping_hotkey": "3DPings ping",
+
+  "pings_wheel_mode": "3DPings wheel mode",
+  "pings_wheel_mode_desc": "3DPings wheel mode",
+  "pings_wheel_mode_select_and_ping": "Select & Ping",
+  "pings_wheel_mode_just_select": "Just Select",
+  "pings_wheel_mode_just_ping": "Just Ping",
+
+  "pings_announce_player_uses_pings_mod": "Show who uses the mod",
+  "pings_announce_player_uses_pings_mod_desc": "Show a system message (to you) if another player uses the mod.",
+  "pings_player_uses_pings_mod": "$PLAYER is using 3DPings.",
+
+  "pings_default_icon": "Default Ping icon",
+  "pings_default_icon_desc": "Default Ping icon. (Before first wheel select or when set to 'just ping' and ping hotkey pressed)",
+
+  "pings_ping_scale": "Ping scale",
+  "pings_ping_scale_desc": "The visual scale of each ping.",
+
+  "pings_ping_lifetime": "Ping lifetime",
+  "pings_ping_lifetime_desc": "Seconds until a ping gets removed.",
+
+  "pings_ping_fade_out_duration": "Fade out duration",
+  "pings_ping_fade_out_duration_desc": "Seconds a ping fades out, before it's lifetime ends. Must be less than the lifetime, obviously!",
+
+  "pings_ping_show_name": "Show pingers name on pings",
+  "pings_ping_show_name_desc": "Shows the name of the pinger on each ping.",
+
+  "pings_ping_show_distance": "Show distance on pings",
+  "pings_ping_show_distance_desc": "Shows your distance to each ping.",
+
+  "pings_max_pings_per_player": "Maximum pings per player",
+  "pings_max_pings_per_player_desc": "The maximum amount of pings per player. (If the player spams another ping, the oldest gets removed.)",
+
+  "pings_colorize_pings": "Colorize pings",
+  "pings_colorize_pings_desc": "Colorize pings like outlines. (Supports WolfgangHUD's 'Colorization Mode')",
+
+  "pings_ping_alpha": "Ping visibility (alpha)",
+  "pings_ping_alpha_desc": "0 = invisible, 1 = visible",
+
+  "pings_reset": "Default options",
+  "pings_reset_confirm": "Are you sure, you want to reset all \"Pings\" options to their default value?"
+}

@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<mod name="3DPings"
+    description="Networked 3D Pings"
+    author="BangL"
+    version="0.1"
+    min_sblt_version="1.2.10"
+    color="60 60 60">
+    <updates>
+        <update provider="modworkshop" identifier="52713" />
+    </updates>
+    <localization directory="loc">
+        <loc file="english.json" language="english" />
+    </localization>
+    <hooks>
+        <pre hook_id="lib/entry" script_path="Pings.lua" />
+        <post hook_id="lib/managers/menu/menucomponentmanager" script_path="Menu.lua" />
+        <post hook_id="lib/setups/gamesetup" script_path="lua/GameSetup.lua" />
+        <post hook_id="lib/managers/hudmanagerpd2" script_path="lua/HUDManagerPD2.lua" />
+        <post hook_id="lib/managers/hud/hudmultiplechoicewheel"
+            script_path="lua/HUDMultipleChoiceWheel.lua" />
+        <post hook_id="lib/network/base/basenetworksession" script_path="lua/BaseNetworkSession.lua" />
+        <post hook_id="lib/units/beings/player/states/playerstandard"
+            script_path="lua/PlayerStandard.lua" />
+        <post hook_id="lib/units/beings/player/states/playerbleedout"
+            script_path="lua/PlayerBleedOut.lua" />
+        <post hook_id="lib/units/beings/player/states/playercarry"
+            script_path="lua/PlayerCarry.lua" />
+        <post hook_id="lib/units/beings/player/states/playercarrycorpse"
+            script_path="lua/PlayerCarryCorpse.lua" />
+        <post hook_id="lib/units/beings/player/states/playermoveobject"
+            script_path="lua/PlayerMoveObject.lua" />
+    </hooks>
+    <keybinds>
+        <keybind keybind_id="pings_ping_hotkey"
+            name="pings_ping_hotkey"
+            localized="true"
+            run_in_menu="false"
+            run_in_game="true"
+            run_in_paused_game="false"
+            script_path="PingHotkey.lua" />
+        <keybind keybind_id="pings_wheel_hotkey"
+            name="pings_wheel_hotkey"
+            localized="true" />
+    </keybinds>
+</mod>
