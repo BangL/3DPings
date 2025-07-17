@@ -166,7 +166,8 @@ Hooks:Add("MenuComponentManagerInitialize", "3DPings_MenuComponentManagerInitial
 		RaidMenuHelper:CreateMenu({
 			name = "pings_options",
 			name_id = "pings_title",
-			inject_menu = "blt_options",
+			inject_list = "blt_options",
+			icon = "waypoint_special_loot",
 			class = PingsMenu
 		})
 	end
