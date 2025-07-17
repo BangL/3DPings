@@ -62,10 +62,7 @@ if not Pings.Sync then
             self:send_to_peer(peer_id, self.events.rejected, "only clients are allowed to send this.")
             return false
         end
-        log("Pings.Sync:_validate peer_id: " .. tostring(peer_id) .. " (" .. tostring(type(peer_id)) .. ")")
-        local peer = managers.network:session():peer(peer_id)
-        log("peer: " .. tostring(peer))
-        return peer
+        return managers.network:session():peer(peer_id)
     end
 
     function Pings.Sync:send_to_peer(peer_id, event, data)
