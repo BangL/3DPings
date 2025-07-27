@@ -69,6 +69,9 @@ function Pings:pop_ping(icon_id, peer, position)
     icon_id = icon_id or self._default_icon_id or self:get_config_option("default_icon")
     peer = peer or managers.network:session():local_peer()
     local unit = peer._unit
+    if not unit then
+        return
+    end
     if not position then
         local camera = unit:camera()
         local cam_pos = camera:position()
