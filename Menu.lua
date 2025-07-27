@@ -8,6 +8,9 @@ function PingsMenu:Init(root)
 	self:_MakeHeader()
 
 	self:_MakeSeparator()
+
+	self:AutoBindNamedControlsBegin()
+
 	self:_MakeOptionMultiChoiceIcons("default_icon", Pings.icons)
 	self:_MakeOptionMultiChoice("wheel_mode", {
 		"wheel_mode_select_and_ping",
@@ -29,6 +32,7 @@ function PingsMenu:Init(root)
 	self:_MakeOptionSlider("ping_fade_out_duration", 1, 120)
 
 	self:_MakeResetButton()
+	self:AutoBindNamedControlsEnd()
 end
 
 function PingsMenu:_MakeHeader()
@@ -66,6 +70,7 @@ function PingsMenu:_MakeOptionToggle(option)
 		desc = id .. "_desc",
 		value = Pings:get_config_option(option),
 		callback = callback(self, self, "OnOptionChanged", option),
+		auto_select_on_hover = true
 	})
 end
 
@@ -80,6 +85,7 @@ function PingsMenu:_MakeOptionSlider(option, min, max, decimals)
 		min = min or 0,
 		max = max or 100,
 		value_format = "%." .. (decimals or 0) .. "f",
+		auto_select_on_hover = true
 	})
 end
 
@@ -92,6 +98,7 @@ function PingsMenu:_MakeOptionMultiChoice(option, items)
 		value = Pings:get_config_option(option),
 		callback = callback(self, self, "OnOptionChanged", option),
 		items = {},
+		auto_select_on_hover = true
 	}
 	for i, opt_id in ipairs(items) do
 		table.insert(params.items, {
@@ -111,6 +118,7 @@ function PingsMenu:_MakeOptionMultiChoiceIcons(option, items)
 		value = Pings:get_config_option(option),
 		callback = callback(self, self, "OnOptionChanged", option),
 		items = {},
+		auto_select_on_hover = true
 	}
 	for _, opt_id in ipairs(items) do
 		table.insert(params.items, {
@@ -135,11 +143,7 @@ function PingsMenu:Reset(value, item)
 		managers.localization:text("pings_reset"),
 		managers.localization:text("pings_reset_confirm"),
 		{
-			[1] = {
-				text = managers.localization:text("dialog_no"),
-				is_cancel_button = true,
-			},
-			[2] = {
+			{
 				text = managers.localization:text("dialog_yes"),
 				callback = function()
 					-- reset config
@@ -149,6 +153,10 @@ function PingsMenu:Reset(value, item)
 					self._something_changed = false
 					self:ReloadMenu()
 				end,
+			},
+			{
+				text = managers.localization:text("dialog_no"),
+				is_cancel_button = true,
 			},
 		},
 		true
