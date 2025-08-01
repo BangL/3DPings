@@ -31,8 +31,14 @@ function PingsMenu:Init(root)
 	self:_MakeOptionSlider("ping_lifetime", 1, 120)
 	self:_MakeOptionSlider("ping_fade_out_duration", 1, 120)
 
-	self:_MakeResetButton()
+	self._reset_btn = self:_MakeResetButton()
 	self:AutoBindNamedControlsEnd()
+end
+
+function PingsMenu:_additional_active_controls()
+	return {
+		self._reset_btn
+	}
 end
 
 function PingsMenu:_MakeHeader()
@@ -47,7 +53,7 @@ function PingsMenu:_MakeHeader()
 end
 
 function PingsMenu:_MakeResetButton()
-	self:LongRoundedButton2({
+	return self:LongRoundedButton2({
 		name = "pings_reset",
 		text = "pings_reset",
 		localize = true,
