@@ -16,7 +16,11 @@ function Pings:save_config()
 end
 
 function Pings:load_config()
-    self._config = clone(self._config_defaults)
+    -- runs as lib/entry pre hook, core utils like clone() may not be loaded yet (config is flat anyway)
+    self._config = {}
+    for k, v in pairs(self._config_defaults) do
+        self._config[k] = v
+    end
     local file = io.open(self._config_path, "r")
     if file then
         local config = json.decode(file:read("*all"))
