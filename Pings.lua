@@ -69,19 +69,38 @@ function Pings:set_default_ping_icon(icon_id)
     self._default_icon_id = icon_id
 end
 
-function Pings:pop_ping(icon_id, peer, position)
-    icon_id = icon_id or self._default_icon_id or self:get_config_option("default_icon")
-    peer = peer or managers.network:session():local_peer()
-    local unit = peer._unit
-    if not unit then
+function Pings:_get_aim_position()
+    local unit = managers.player:player_unit()
+    if not alive(unit) then
         return
     end
-    if not position then
-        local camera = unit:camera()
-        local cam_pos = camera:position()
-        position = World:raycast("ray", cam_pos, cam_pos + camera:rotation():y() * 50000).position
+    local camera = unit:camera()
+    local from = camera:position()
+    local to = from + camera:rotation():y() * 50000
+    local ray = World:raycast("ray", from, to, "slot_mask", managers.slot:get_mask("bullet_impact_targets"), "ignore_unit", unit)
+    return ray and ray.position
+end
+
+function Pings:pop_ping(icon_id, peer, position)
+    if not (managers.network and managers.network:session() and managers.waypoints) then
+        return
     end
-    local is_own_ping = (unit == managers.player:player_unit())
+    icon_id = icon_id or self._default_icon_id or self:get_config_option("default_icon")
+    peer = peer or managers.network:session():local_peer()
+    if not peer then
+        return
+    end
+    local is_own_ping = (peer == managers.network:session():local_peer())
+    if not position then
+        -- only our own ping can be aimed, a remote one without a position is malformed
+        if not is_own_ping then
+            return
+        end
+        position = self:_get_aim_position()
+        if not position then
+            return
+        end
+    end
     local waypoint_id = self:_get_waypoint_id_for_peer(peer:id())
 
     local scale = self:get_config_option("ping_scale")
@@ -95,9 +114,14 @@ function Pings:pop_ping(icon_id, peer, position)
 
     local color = Color.white
     if colorize_pings then
-        local color_id = managers.criminals:character_color_id_by_unit(unit)
-        if WolfgangHUD then
-            color_id = WolfgangHUD:character_color_id(unit, self._id)
+        -- the peer's unit is gone while they respawn, their peer id still resolves
+        local unit = peer:unit()
+        local color_id
+        if alive(unit) then
+            color_id = WolfgangHUD and WolfgangHUD:character_color_id(unit) or
+                managers.criminals:character_color_id_by_unit(unit)
+        else
+            color_id = managers.criminals:character_color_id_by_peer_id(peer:id())
         end
         color = tweak_data.chat_colors[color_id] or tweak_data.chat_colors[#tweak_data.chat_colors]
     end
@@ -141,7 +165,7 @@ function Pings:pop_ping(icon_id, peer, position)
         name = {
             type = "label",
             show = show_name,
-            text = peer._name,
+            text = peer:name(),
             font = tweak_data.gui.fonts.din_compressed_outlined_18,
         },
         distance = {
