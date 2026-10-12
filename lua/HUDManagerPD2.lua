@@ -37,7 +37,7 @@ function HUDManager:_create_pings_wheel_params()
 	if not self._pings_wheel_params then
 		self._pings_wheel_params = {
 			cooldown = 0.5,
-			icons_max_height = 42,
+			icons_max_size = 42,
 			no_text = true,
 			show_clbks = { callback(managers.player, managers.player, "disable_view_movement") },
 			hide_clbks = { callback(managers.player, managers.player, "enable_view_movement") },

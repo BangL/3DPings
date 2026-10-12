@@ -12,10 +12,14 @@ end
 
 function HUDMultipleChoiceWheel:_create_icon(index, parent, ...)
     local icon = _create_icon_original(self, index, parent, ...)
-    if icon and self._tweak_data.icons_max_height then
+    if icon and self._tweak_data.icons_max_size then
         local h = icon:h()
         local w = icon:w()
-        icon:set_size(self._tweak_data.icons_max_height, h * self._tweak_data.icons_max_height / w)
+        local longest = math.max(w, h)
+        if longest > 0 then
+            local scale = self._tweak_data.icons_max_size / longest
+            icon:set_size(w * scale, h * scale)
+        end
     end
     return icon
 end
