@@ -1,0 +1,46 @@
+{
+  "pings_title": "3DPings",
+
+  "pings_wheel_hotkey": "3DPings-Rad",
+  "pings_ping_hotkey": "3DPings-Ping",
+
+  "pings_wheel_mode": "Rad-Modus",
+  "pings_wheel_mode_desc": "Was die Auswahl eines Symbols im Rad bewirkt.",
+  "pings_wheel_mode_select_and_ping": "Wählen & pingen",
+  "pings_wheel_mode_just_select": "Nur wählen",
+  "pings_wheel_mode_just_ping": "Nur pingen",
+
+  "pings_announce_player_uses_pings_mod": "Anzeigen, wer die Mod nutzt",
+  "pings_announce_player_uses_pings_mod_desc": "Zeigt dir eine Systemnachricht, wenn ein anderer Spieler die Mod nutzt.",
+  "pings_player_uses_pings_mod": "$PLAYER nutzt 3DPings.",
+
+  "pings_default_icon": "Standard-Ping-Symbol",
+  "pings_default_icon_desc": "Standard-Ping-Symbol. (Vor der ersten Auswahl im Rad oder bei \"Nur pingen\" und gedrückter Ping-Taste)",
+
+  "pings_ping_scale": "Ping-Größe",
+  "pings_ping_scale_desc": "Die Darstellungsgröße jedes Pings.",
+
+  "pings_ping_lifetime": "Ping-Lebensdauer",
+  "pings_ping_lifetime_desc": "Sekunden, bis ein Ping entfernt wird.",
+
+  "pings_ping_fade_out_duration": "Ausblenddauer",
+  "pings_ping_fade_out_duration_desc": "Sekunden, die ein Ping ausblendet, bevor seine Lebensdauer endet. Muss logischerweise kleiner als die Lebensdauer sein!",
+
+  "pings_ping_show_name": "Name des Pingenden anzeigen",
+  "pings_ping_show_name_desc": "Zeigt an jedem Ping den Namen des Spielers, der ihn gesetzt hat.",
+
+  "pings_ping_show_distance": "Entfernung an Pings anzeigen",
+  "pings_ping_show_distance_desc": "Zeigt deine Entfernung zu jedem Ping.",
+
+  "pings_max_pings_per_player": "Maximale Pings pro Spieler",
+  "pings_max_pings_per_player_desc": "Die maximale Anzahl Pings pro Spieler. (Setzt ein Spieler weitere, wird der älteste entfernt.)",
+
+  "pings_colorize_pings": "Pings einfärben",
+  "pings_colorize_pings_desc": "Färbt Pings wie die Outlines ein. (Unterstützt WolfgangHUDs \"Einfärbungsmodus\")",
+
+  "pings_ping_alpha": "Ping-Sichtbarkeit (Alpha)",
+  "pings_ping_alpha_desc": "0 = unsichtbar, 1 = sichtbar",
+
+  "pings_reset": "Standardeinstellungen",
+  "pings_reset_confirm": "Bist du sicher, dass du alle \"3DPings\"-Einstellungen auf ihren Standardwert zurücksetzen willst?"
+}
