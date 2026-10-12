@@ -42,5 +42,5 @@
   "pings_ping_alpha_desc": "0 = invisible, 1 = visible",
 
   "pings_reset": "Default options",
-  "pings_reset_confirm": "Are you sure, you want to reset all \"Pings\" options to their default value?"
+  "pings_reset_confirm": "Are you sure, you want to reset all \"3DPings\" options to their default value?"
 }
