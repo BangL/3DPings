@@ -14,52 +14,38 @@ if not Pings.Sync then
             client = 1,
             both = 2,
         },
-        protocol_version = 1
+        protocol_version = 2
     }
 
+    -- LuaNetworking:TableToString() flattens everything through tostring() and
+    -- separates with , and |, so it cannot nest, loses every type and breaks on
+    -- values holding one of its separators. json keeps all of that intact, which
+    -- is why to_original_type() - guessing types back from strings - is gone.
     function Pings.Sync.table_to_string(tbl)
-        return LuaNetworking:TableToString(tbl) or ""
+        return json.encode(tbl or {}) or ""
     end
 
     function Pings.Sync.string_to_table(str)
-        local tbl = LuaNetworking:StringToTable(str) or {}
-
-        for k, v in pairs(tbl) do
-            tbl[k] = Pings.Sync.to_original_type(v)
-        end
-
-        return tbl
-    end
-
-    function Pings.Sync.to_original_type(s)
-        local v = s
-        if type(s) == "string" then
-            if s == "nil" then
-                v = nil
-            elseif (s == "true") or (s == "false") then
-                v = (s == "true")
-            else
-                v = tonumber(s) or s
-            end
-        end
-        return v
+        -- SuperBLT pcall guards json.decode and returns false on malformed input,
+        -- which is what a peer on the old , and | protocol now sends us
+        return json.decode(str or "") or {}
     end
 
     function Pings.Sync:_validate(valid_on, valid_from, peer_id)
         if (valid_on == self.valid.server) and Network:is_client() then
-            self:send_to_peer(peer_id, self.events.rejected, "clients cannot handle this.")
+            self:send_to_peer(peer_id, self.events.rejected, { reason = "clients cannot handle this." })
             return false
         end
         if (valid_on == self.valid.client) and Network:is_server() then
-            self:send_to_peer(peer_id, self.events.rejected, "the host cannot handle this.")
+            self:send_to_peer(peer_id, self.events.rejected, { reason = "the host cannot handle this." })
             return false
         end
         if (valid_from == self.valid.server) and (peer_id ~= 1) then
-            self:send_to_peer(peer_id, self.events.rejected, "only the host is allowed to send this.")
+            self:send_to_peer(peer_id, self.events.rejected, { reason = "only the host is allowed to send this." })
             return false
         end
         if (valid_from == self.valid.client) and (peer_id == 1) then
-            self:send_to_peer(peer_id, self.events.rejected, "only clients are allowed to send this.")
+            self:send_to_peer(peer_id, self.events.rejected, { reason = "only clients are allowed to send this." })
             return false
         end
         return managers.network:session():peer(peer_id)
@@ -124,7 +110,7 @@ if not Pings.Sync then
                 if self.events[tags.event] and self[tags.event] then
                     self[tags.event](self, sender, data)
                 elseif tags.event ~= self.events.rejected then
-                    self:send_to_peer(sender, self.events.rejected, "event unknown.")
+                    self:send_to_peer(sender, self.events.rejected, { reason = "event unknown." })
                 end
             end
         end
