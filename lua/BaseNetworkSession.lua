@@ -14,7 +14,9 @@ if not Pings.Sync then
             client = 1,
             both = 2,
         },
-        protocol_version = 3
+        protocol_version = 3,
+        retry_max = 5,
+        retry_delay = 5
     }
 
     -- LuaNetworking:TableToString() flattens everything through tostring() and
@@ -88,6 +90,23 @@ if not Pings.Sync then
         end
     end
 
+    -- the handshake goes out once on load, so a lost one would leave us deaf to that peer for the
+    -- whole session: ask the peers that did not answer a few more times
+    function Pings.Sync:retry_unknown_peers(attempt)
+        attempt = attempt or 1
+
+        if attempt > self.retry_max then
+            return
+        end
+
+        DelayedCalls:Add("3DPings_Sync_retry", self.retry_delay, function()
+            if LuaNetworking:IsMultiplayer() then
+                self:send_to_unknown_peers(self.events.handshake, { version = self.protocol_version })
+                self:retry_unknown_peers(attempt + 1)
+            end
+        end)
+    end
+
     function Pings.Sync:peer_has_mod(peer_id)
         return (peer_id == managers.network:session():local_peer():id()) or
             (Network:is_server() and (peer_id == 1)) or
@@ -145,10 +164,15 @@ if not Pings.Sync then
 
         log("[3DPings.Sync handshake] Peer " .. tostring(peer_id) .. " is using a compatible 3DPings version.")
 
-        if not self.peers[peer_id] then
+        -- always answered (but never an answer), a peer that already knows us may still be waiting for ours
+        if not data.reply then
             self:send_to_peer(peer_id, self.events.handshake, {
-                version = self.protocol_version
+                version = self.protocol_version,
+                reply = true
             })
+        end
+
+        if not self.peers[peer_id] then
             Pings:announce_peer_uses_mod(peer)
             self.peers[peer_id] = true
         end
@@ -171,6 +195,7 @@ Hooks:Add("BaseNetworkSessionOnLoadComplete", "3DPings.Sync_BaseNetworkSessionOn
             -- client handshake request to host
             Pings.Sync:send_to_unknown_peers(Pings.Sync.events.handshake,
                 { version = Pings.Sync.protocol_version })
+            Pings.Sync:retry_unknown_peers()
         end
     end
 )
