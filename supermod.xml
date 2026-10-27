@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<mod name="3DPings"
+<mod name="3DPings" image="icon.png"
     description="Networked 3D Pings"
     author="BangL"
     version="0.3.4"
