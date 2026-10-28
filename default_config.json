@@ -8,5 +8,6 @@
   "colorize_pings": false,
   "ping_alpha": 0.8,
   "announce_player_uses_pings_mod": true,
-  "default_icon": "waypoint_special_where"
+  "default_icon": "waypoint_special_where",
+  "wheel_mode": 1
 }

@@ -155,6 +155,7 @@ function PingsMenu:Reset(value, item)
 				callback = function()
 					-- reset config
 					Pings:load_config_defaults()
+					Pings._config = clone(Pings._config_defaults)
 					Pings:save_config()
 					-- reset menu
 					self._something_changed = false

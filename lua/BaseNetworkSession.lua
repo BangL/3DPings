@@ -183,8 +183,10 @@ if not Pings.Sync then
         if not peer then
             return
         end
-        if data.x and data.y and data.z and data.icon_id then
-            Pings:pop_ping(data.icon_id, peer, Vector3(data.x, data.y, data.z))
+        if tonumber(data.x) and tonumber(data.y) and tonumber(data.z) and data.icon_id then
+            -- an icon we do not know (e.g. from another mod) would crash _get_icon_data, use our default instead
+            local icon_id = tweak_data.gui.icons[data.icon_id] and data.icon_id or nil
+            Pings:pop_ping(icon_id, peer, Vector3(tonumber(data.x), tonumber(data.y), tonumber(data.z)))
         end
     end
 end
