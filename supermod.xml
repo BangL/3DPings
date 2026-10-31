@@ -8,7 +8,7 @@
     color="60 60 60">
     <updates>
         <update identifier="3dpings">
-            <host meta="https://raw.githubusercontent.com/BangL/raid-mods-meta/main/3dpings.json"/>
+            <host meta="https://raw.githubusercontent.com/BangL/raid-mods-meta/main/3dpings.json" patchnotes="https://github.com/BangL/3DPings/blob/master/CHANGELOG.md"/>
         </update>
     </updates>
     <localization directory="loc">
